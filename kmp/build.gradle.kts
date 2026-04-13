@@ -46,6 +46,8 @@ kotlin {
             implementation(libs.compose.material3)
             implementation(libs.compose.navigation3.ui)
             implementation(libs.compose.components.resources)
+            implementation(libs.compose.lifecycle.viewmodel)
+            implementation(libs.compose.lifecycle.runtime)
             implementation(libs.ui.tooling.preview)
         }
 
@@ -62,4 +64,3 @@ kotlin {
         }
     }
 }
-

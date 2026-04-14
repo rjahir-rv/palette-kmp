@@ -1,0 +1,7 @@
+package com.palette.kmp
+
+import platform.UIKit.UIPasteboard
+
+actual fun copyToClipboard(text: String) {
+    UIPasteboard.generalPasteboard.string = text
+}

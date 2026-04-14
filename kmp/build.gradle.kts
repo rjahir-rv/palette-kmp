@@ -11,7 +11,7 @@ plugins {
 kotlin {
 
     android {
-        compileSdk = 36
+        compileSdk = 37
         namespace = "com.palette.kmp"
         compilerOptions {
             jvmTarget = JvmTarget.JVM_11 // Max supported version for Android

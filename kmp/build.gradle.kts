@@ -6,6 +6,8 @@ plugins {
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.jetbrains.compose)
     alias(libs.plugins.android.multiplatform.library)
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.room)
 }
 
 kotlin {
@@ -49,6 +51,15 @@ kotlin {
             implementation(libs.compose.lifecycle.viewmodel)
             implementation(libs.compose.lifecycle.runtime)
             implementation(libs.ui.tooling.preview)
+            //koin
+            implementation(libs.koin.core)
+            implementation(libs.koin.compose)
+            implementation(libs.koin.compose.viewmodel)
+
+            //room
+            implementation(libs.room.runtime)
+            implementation(libs.sqlite)
+
         }
 
         jvmMain.dependencies {
@@ -57,10 +68,23 @@ kotlin {
         androidMain.dependencies {
             implementation(libs.ui.tooling.preview)
             implementation(libs.ui.tooling)
+            implementation(libs.koin.android)
         }
 
         commonTest.dependencies {
             implementation(kotlin("test"))
         }
     }
+}
+
+dependencies {
+    add("kspAndroid", libs.room.compiler)
+    add("kspJvm", libs.room.compiler)
+    add("kspIosX64", libs.room.compiler)
+    add("kspIosArm64", libs.room.compiler)
+    add("kspIosSimulatorArm64", libs.room.compiler)
+}
+
+room {
+    schemaDirectory("$projectDir/schemas")
 }

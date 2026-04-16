@@ -30,6 +30,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.palette.kmp.components.Alert
 import com.palette.kmp.components.ModalPalette
 import com.palette.kmp.models.PaletteModel
 import com.palette.kmp.navigation.Palette
@@ -94,6 +95,7 @@ fun ContentHome(modifier: Modifier, navController: NavController) {
     var expanded by remember { mutableStateOf<Int?>(null) }
     var showModal by remember { mutableStateOf(false) }
     var selectedPalette by remember { mutableStateOf<PaletteModel?>(null) }
+    var showDeleteAlert by remember { mutableStateOf(false) }
 
 
     LazyColumn(modifier) {
@@ -123,7 +125,11 @@ fun ContentHome(modifier: Modifier, navController: NavController) {
 
                             DropdownMenuItem(
                                 text = { Text(text = "Delete") },
-                                onClick = { expanded = null }
+                                onClick = {
+                                    selectedPalette = item
+                                    showDeleteAlert = true
+                                    expanded = null
+                                }
                             )
                         }
                     }
@@ -135,7 +141,7 @@ fun ContentHome(modifier: Modifier, navController: NavController) {
                     }
                 },
                 modifier = Modifier.clickable{
-                    navController.navigate(Palette)
+                    navController.navigate(Palette(item.id, item.name, item.desc))
                 }
             )
             HorizontalDivider()
@@ -149,6 +155,19 @@ fun ContentHome(modifier: Modifier, navController: NavController) {
                 viewModel.updatePalette(it)
                 showModal = false
             }
+        )
+    }
+
+    if (showDeleteAlert) {
+        Alert(
+            title = "Delete palette",
+            message = "Are you sure you want to delete this palette and all its colors?",
+            confirmText = "Delete",
+            onConfirm = {
+                selectedPalette?.let { viewModel.deletePalette(it) }
+                showDeleteAlert = false
+            },
+            onDismiss = { showDeleteAlert = false }
         )
     }
 

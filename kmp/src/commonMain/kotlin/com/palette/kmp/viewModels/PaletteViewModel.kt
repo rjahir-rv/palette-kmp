@@ -3,10 +3,10 @@ package com.palette.kmp.viewModels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.palette.kmp.models.PaletteModel
+import com.palette.kmp.usesCases.DeletePalette
 import com.palette.kmp.usesCases.GetPalette
 import com.palette.kmp.usesCases.InsertPalette
 import com.palette.kmp.usesCases.UpdatePalette
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
@@ -15,7 +15,8 @@ import kotlinx.coroutines.launch
 class PaletteViewModel(
     private val insertPalette: InsertPalette,
     private val updatePalette: UpdatePalette,
-    private val getPalette: GetPalette
+    private val getPalette: GetPalette,
+    private val deletePalette: DeletePalette
 ) : ViewModel() {
 
     val palettes: StateFlow<List<PaletteModel>?> = getPalette.invoke()
@@ -34,6 +35,12 @@ class PaletteViewModel(
     fun updatePalette(paletteItem: PaletteModel) {
         viewModelScope.launch {
             updatePalette.invoke(paletteItem)
+        }
+    }
+
+    fun deletePalette(paletteItem: PaletteModel) {
+        viewModelScope.launch {
+            deletePalette.invoke(paletteItem)
         }
     }
 }

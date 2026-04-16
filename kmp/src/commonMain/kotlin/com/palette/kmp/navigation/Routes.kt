@@ -6,4 +6,7 @@ import kotlinx.serialization.Serializable
 object Home
 
 @Serializable
-object Palette
+data class Palette(val id: Int, val name: String, val desc: String)
+
+@Serializable
+data class ColorPreview(val id: Int, val name: String)

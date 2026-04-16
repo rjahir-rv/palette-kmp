@@ -51,6 +51,7 @@ kotlin {
             implementation(libs.compose.lifecycle.viewmodel)
             implementation(libs.compose.lifecycle.runtime)
             implementation(libs.ui.tooling.preview)
+            implementation(libs.navigation.compose)
             //koin
             implementation(libs.koin.core)
             implementation(libs.koin.compose)
